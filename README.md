@@ -21,3 +21,20 @@ I like it and the helper tool "L7-Snake" is sufficient for a low-level network o
 Especially for gated networks (subnet locks) it does serve me well.
 
 Enjoy :)
+
+## Further improvement
+Everyone is welcome to submit issues.
+
+Further tasks are:
+- add SSL/TLS
+- cleanup output for multi-target clients
+
+## Infos
+I compiled with:
+- CGO_ENABLED = 1
+- go build -ldflags='-s -w -extldflags "-static"' main.go
+
+I used (on my local machine) upx for binary compression with:
+- upx --best l7-snake (and got it to ~2810KB with full functionality)
+
+Hint: _On Windows the compression flag --brute or --ultra-brute throw a false positive with Windows Defender, so I would only use the --best flag._
