@@ -16,7 +16,7 @@ Simple gRPC L7 tracer for network troubleshooting.
 ## Intention
 Distributed networks often get confusing, so I decided to code a little helper. Since I am not a programmer, I never used gRPC and wanted to give it a try.
 
-I like it and the helper tool "L7-Snake" is sufficient for a low-level network overview when tools like SDNs (NSX, Nuage, Midonet), Meshes (Istio, LinkerD, etc.), Monitoring (Icinga, Nagios, Datadog, etc.) or other Analysis is limited.
+I like it and the helper tool "L7-Snake" is sufficient for a low-level network overview when tools like SDNs (NSX, Nuage, Midonet), Meshes (Istio, LinkerD, etc.), Monitoring (Icinga, Nagios, Datadog, etc.) or other analysis is limited.
 
 Especially for gated networks (subnet locks) it does serve me well.
 
@@ -38,3 +38,6 @@ I used (on my local machine) upx for binary compression with:
 - upx --best l7-snake (and got it to ~2810KB with full functionality)
 
 Hint: _On Windows the compression flag --brute or --ultra-brute throw a false positive with Windows Defender, so I would only use the --best flag._
+
+## Schematic
+![Alt-Text](./pictures/example.png)
