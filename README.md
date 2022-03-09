@@ -12,6 +12,8 @@ Simple gRPC L7 tracer for network troubleshooting.
     - ROUTES = Arbitrary tags for human readable tracing
     - TERMINATOR = Decides if your node is the last link of the chain or not
     - INTERVAL = Poking interval (format 1ms,1s,1m,1h)
+  - Flags
+    - By using the flag "-config" you can set a path for your config file
 
 ## Intention
 Distributed networks often get confusing, so I decided to code a little helper. Since I am not a programmer, I never used gRPC and wanted to give it a try.
