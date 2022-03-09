@@ -30,6 +30,9 @@ Everyone is welcome to submit issues.
 Further tasks are:
 - add SSL/TLS
 - cleanup output for multi-target clients
+- add Frontend
+- implement live route changes (add,delete,change) with REST
+- add database connector for timebased analysis
 
 ## Infos
 I compiled with:
