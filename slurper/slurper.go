@@ -11,9 +11,8 @@ import (
 
 //Init just consumes a path to a file
 func Init(file string) {
-	log.Println("Looking for config in " + file)
 	if statFile(file) {
-		log.Println("Config found!")
+		log.Println("Config found! Using", file)
 		configData, configError := ioutil.ReadFile(file)
 		if configError != nil {
 			log.Fatal("Could not read config file!", configError)

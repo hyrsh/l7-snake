@@ -33,6 +33,8 @@ Further tasks are:
 - add Frontend
 - implement live route changes (add,delete,change) with REST
 - add database connector for timebased analysis
+- add file based logging
+- add logrotation based on filesize
 
 ## Infos
 I compiled with:

@@ -2,11 +2,13 @@ package main
 
 import (
 	"flag"
+	"l7-snake/banner"
 	"l7-snake/checkconfig"
 	"l7-snake/client"
 	"l7-snake/configstruct"
 	"l7-snake/server"
 	"l7-snake/slurper"
+	"log"
 )
 
 //I build with
@@ -16,6 +18,9 @@ import (
 //brute compression throws a false positive with Windows Defender -.-"
 
 func init() {
+	//print banner
+	log.Println(banner.PrintBanner())
+
 	//cli flags for config file path
 	configPath := flag.String("config", "./config.yml", "Path to config file")
 	flag.Parse()
