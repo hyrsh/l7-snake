@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ name }}
+  name: {{ name }}-dpl
+  namespace: snake
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ name }}
+  template:
+    metadata:
+      labels:
+        app: {{ name }}
+    spec:
+      containers:
+      - image: l7-snake:v1
+        command: [ "/l7-snake" ]
+        args: [ "--config", "/cm/config.yml" ]
+        name: l7-snake
+        ports:
+        - containerPort: 9001
+        volumeMounts:
+        - name: cfg
+          mountPath: /cm
+      volumes:
+      - name: cfg
+        configMap:
+          name: {{ name }}-cm
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ name }}-cm
+  namespace: snake
+data:
+  config.yml: |
+    data:
+        communication:
+            id: {{ name }}
+            listenport: "9001"
+            targets:
+              - {{ target }}:9001
+        routing:
+            routes:
+              - {{ route }}
+            terminator: {{ term }}
+        settings:
+            interval: 500ms
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: {{ name }}
+  name: {{ name }}-svc
+  namespace: snake
+spec:
+  ports:
+  - name: general
+    protocol: TCP
+    port: 9001
+  selector:
+    app: {{ name }}
+  sessionAffinity: None
+  type: ClusterIP

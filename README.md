@@ -46,5 +46,25 @@ I used (on my local machine) upx for binary compression with:
 
 Hint: _On Windows the compression flag --brute or --ultra-brute throw a false positive with Windows Defender, so I would only use the --best flag._
 
+## Docker
+
+Inside the Docker directory there is a pre-defined Dockerfile that works on all plattforms. Make sure your binary has no dynamic linking. We only like static linked binaries.
+
+e.g. (after you have built the binary and place it besides the Dockerfile):
+- docker build -t l7-snake:v1 .
+
+This will create a local docker image that is ready to use or to push to other registries.
+
+## Kubernetes
+
+Inside the kubernetes directory you can run the create-deployment.sh to create a default deployment, configmap and service.
+
+e.g.:
+- ./create-deployment.sh mysnake
+
+This will create a file called "mysnake-dpl.yml" that is ready to be deployed with "kubectl apply -f mysnake-dpl.yml".
+
+Make sure you adjust the imagepath to reflect your environment.
+
 ## Schematic
 ![Alt-Text](./pictures/example.png)

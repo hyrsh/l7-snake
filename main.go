@@ -11,10 +11,16 @@ import (
 	"log"
 )
 
-//I build with
+//On Windows
 //$env:CGO_ENABLED = 1; go build -ldflags='-s -w -extldflags "-static"' main.go
+
+//On Linux (important for docker image building with "FROM scratch")
+//go build -a -tags netgo --ldflags '-extldflags "-static"'
+
 //packed with
-//upx --best l7-snake.exe
+//upx --best l7-snake.exe (Windows)
+//or
+//upx --best l7-snake (Linux)
 //brute compression throws a false positive with Windows Defender -.-"
 
 func init() {
