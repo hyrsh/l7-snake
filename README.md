@@ -25,6 +25,7 @@ Especially for gated networks (subnet locks) it does serve me well.
 Enjoy :)
 
 ## Further improvement
+
 Everyone is welcome to submit issues.
 
 Further tasks are:
@@ -37,12 +38,17 @@ Further tasks are:
 - add logrotation based on filesize
 
 ## Infos
-I compiled with:
-- CGO_ENABLED = 1
+
+On Windows I built with:
+- CGO\_ENABLED=1
 - go build -ldflags='-s -w -extldflags "-static"' main.go
 
-I used (on my local machine) upx for binary compression with:
-- upx --best l7-snake (and got it to ~2810KB with full functionality)
+On Linux I built with:
+- CGO\_ENABLED=0
+- go build -a -tags netgo --ldflags '-extldflags "-static"'
+
+For binary compression I used:
+- upx --best l7-snake
 
 Hint: _On Windows the compression flag --brute or --ultra-brute throw a false positive with Windows Defender, so I would only use the --best flag._
 
