@@ -31,7 +31,7 @@ func StartServer() {
 	//endpoint health is always "HEALTHY" since an "OFFLINE" state can only be reported by an external client requesting
 	//something similar applies to the targets (it does not have any), which makes zero a special number
 	if configstruct.CurrentConfig.Data.Routing.Terminator {
-		centraldata.CentralData[0].Health = "HEALTHY"
+		centraldata.CentralData[0].Health = 0
 		centraldata.CentralData[0].Targets = 0
 		centraldata.CentralData[0].Routes[0] = "END OF " + configstruct.CurrentConfig.Data.Routing.Routes[0] //we force one endpoint to have one ending route
 	}

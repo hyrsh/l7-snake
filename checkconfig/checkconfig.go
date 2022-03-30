@@ -19,16 +19,20 @@ func Init() {
 	//check listen port for validity
 	checkPort(configstruct.CurrentConfig.Data.Communication.ListenPort)
 
-	//check target IPs for validity
-	l := len(configstruct.CurrentConfig.Data.Communication.Targets)
-	for i := 0; i < l; i++ {
-		div := strings.Split(configstruct.CurrentConfig.Data.Communication.Targets[i], ":") //I know its stupid
-		checkIP(div[0])
-		checkPort(div[1])
-	}
-
 	//check terminator
-	checkBool(configstruct.CurrentConfig.Data.Routing.Terminator)
+	if !checkBool(configstruct.CurrentConfig.Data.Routing.Terminator) {
+		//check target IPs for validity only if it is a client
+		l := len(configstruct.CurrentConfig.Data.Communication.Targets)
+		for i := 0; i < l; i++ {
+			div := strings.Split(configstruct.CurrentConfig.Data.Communication.Targets[i], ":") //I know its stupid
+			if len(div) != 2 {                                                                  //I want people to enter a valid port if they provide an URL
+				log.Fatal("Target not parsable (" + div[0] + "). If you use an URL append the port (e.g.: myurl.de:80)")
+			} else { //default checks
+				checkIP(div[0])
+				checkPort(div[1])
+			}
+		}
+	}
 
 	//check time
 	checkTime(configstruct.CurrentConfig.Data.Settings.Interval)
@@ -62,7 +66,7 @@ func checkID(id string) {
 //check given string after conversion to uint16 for validity of range and exceptions
 func checkPort(portStr string) {
 	//we want to restrict some port allocations
-	portArray := [4]uint16{0, 22, 80, 443}              //no 0, no SSH, no HTTP, no HTTPS
+	portArray := [2]uint16{0, 22}                       //no 0, no SSH
 	port, portErr := strconv.ParseUint(portStr, 10, 16) //parse for uint16 decimal (base 10) representation, since the port range is numerically based on it
 	if portErr != nil {
 		log.Println("Port is invalid", portStr)
@@ -79,18 +83,18 @@ func checkPort(portStr string) {
 func checkIP(ipadr string) {
 	ip := net.ParseIP(ipadr)
 	if ip == nil {
-		log.Fatal("IP not valid (whitespaces?) " + ipadr)
+		log.Println("Cannot parse IP as numeric (" + ipadr + "). If you use an URL it is up to you that it is correct.")
 	}
 }
 
 //check boolean statement in the terminator field
-func checkBool(state bool) {
+func checkBool(state bool) bool {
 	if state {
 		//it is yes or true
 		log.Println("The terminator flag is active, no targets will be gathered.")
-	} else {
-		//it is no or false
+		return state
 	}
+	return state
 }
 
 func checkTime(t string) {

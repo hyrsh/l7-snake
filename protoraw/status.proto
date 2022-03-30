@@ -5,9 +5,9 @@ option go_package="./pt3status";
 message Status {
     message Chain {
         string id = 1;
-        string terminator = 2;
+        bool terminator = 2;
         string last_updated = 3;
-        string health = 4;
+        int32 health = 4;
         int32 targets = 5;
         repeated string routes = 6;
     }

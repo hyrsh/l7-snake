@@ -38,16 +38,16 @@ func StartClient() {
 
 		//print centraldata (human readability)
 		for i := 0; i < len(centraldata.CentralData); i++ {
-			health := centraldata.CentralData[i].Health
+			health := getHealthHuman(i)
 			id := centraldata.CentralData[i].Id
 			term := centraldata.CentralData[i].Terminator
 			up := centraldata.CentralData[i].LastUpdated
 			tr := centraldata.CentralData[i].Targets
 			r := centraldata.CentralData[i].Routes
-			if term == "yes" {
-				log.Printf("%s\t| %s\t| %s\t| (-/-)\t| %s | Routes: %s", health, id, term, up, r)
+			if term {
+				log.Printf("%s\t| %s\t| %t\t| (-/-)\t| %s | Routes: %s", health, id, term, up, r)
 			} else {
-				log.Printf("%s\t| %s\t| %s\t| (%d/%d)\t| %s | Routes: %s", health, id, term, ConnPool, tr, up, r)
+				log.Printf("%s\t| %s\t| %t\t| (%d/%d)\t| %s | Routes: %s", health, id, term, ConnPool, tr, up, r)
 			}
 		}
 
@@ -105,14 +105,28 @@ func checkEntry(ret *pt3status.Status) {
 func setHealth() {
 	//Healthy responds from all targets
 	if ConnPool == len(configstruct.CurrentConfig.Data.Communication.Targets) {
-		centraldata.CentralData[0].Health = "HEALTHY"
+		centraldata.CentralData[0].Health = 0 //Healthy
 	}
 	//No responds from targets
 	if ConnPool == 0 {
-		centraldata.CentralData[0].Health = "OFFLINE"
+		centraldata.CentralData[0].Health = 1 //Offline
 	}
 	//Some responses from targets
 	if ConnPool > 0 && ConnPool < len(configstruct.CurrentConfig.Data.Communication.Targets) {
-		centraldata.CentralData[0].Health = "UNHEALTHY"
+		centraldata.CentralData[0].Health = 2 //Unhealthy
+	}
+}
+
+func getHealthHuman(index int) string {
+	h := centraldata.CentralData[index].Health
+	switch h {
+	case 0:
+		return "HEALTHY"
+	case 1:
+		return "OFFLINE"
+	case 2:
+		return "UNHEALTHY"
+	default:
+		return "UNKNOWN"
 	}
 }

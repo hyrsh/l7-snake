@@ -23,6 +23,9 @@ import (
 //upx --best l7-snake (Linux)
 //brute compression throws a false positive with Windows Defender -.-"
 
+//Protobuf build
+//protoc --go_out=. --go-grpc_out=. --go-grpc_opt=require_unimplemented_servers=false protoraw/status.proto
+
 func init() {
 	//print banner
 	log.Println(banner.PrintBanner())

@@ -74,10 +74,10 @@ func writeDefaults(config *Config) {
 	//Communication
 	config.Data.Communication.Id = "none"
 	config.Data.Communication.ListenPort = "9001"
-	config.Data.Communication.Targets = []string{"0.0.0.0:9002", "0.0.0.0:9003"}
+	config.Data.Communication.Targets = []string{"localhost:80", "0.0.0.0:9000"}
 	//Routing
 	config.Data.Routing.Routes = []string{"route-a", "route-b"}
 	config.Data.Routing.Terminator = true
 	//Settings
-	config.Data.Settings.Interval = "500ms"
+	config.Data.Settings.Interval = "3s"
 }

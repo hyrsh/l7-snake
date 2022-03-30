@@ -14,9 +14,9 @@ func OwnData() *pt3status.Status_Chain {
 	//set own data
 	var selfData pt3status.Status_Chain
 	selfData.Id = configstruct.CurrentConfig.Data.Communication.Id
-	selfData.Terminator = Bool2String(configstruct.CurrentConfig.Data.Routing.Terminator)
+	selfData.Terminator = configstruct.CurrentConfig.Data.Routing.Terminator
 	selfData.LastUpdated = time.Now().Format("2006-01-02 15:04:05")
-	selfData.Health = "INIT"                                                             //init value
+	selfData.Health = 1                                                                  //init value with "Offline"
 	selfData.Targets = int32(len(configstruct.CurrentConfig.Data.Communication.Targets)) //the value never changes after start so we can use the target counter
 
 	//append routes to empty data
@@ -25,13 +25,4 @@ func OwnData() *pt3status.Status_Chain {
 	}
 
 	return &selfData
-}
-
-//I needed this, don't judge
-func Bool2String(b bool) string {
-	if b {
-		return "yes"
-	} else {
-		return "no"
-	}
 }
