@@ -52,6 +52,9 @@ For binary compression I used:
 
 Hint: _On Windows the compression flag --brute or --ultra-brute throw a false positive with Windows Defender, so I would only use the --best flag._
 
+Protobuf build:
+- protoc --go_out=. --go-grpc_out=. --go-grpc_opt=require_unimplemented_servers=false protoraw/status.proto
+
 ## Docker
 
 Inside the Docker directory there is a pre-defined Dockerfile that works on all plattforms. Make sure your binary has no dynamic linking. We only like static linked binaries.
