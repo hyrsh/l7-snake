@@ -76,4 +76,4 @@ This will create a file called "mysnake-dpl.yml" that is ready to be deployed wi
 Make sure you adjust the imagepath to reflect your environment.
 
 ## Schematic
-![Alt-Text](./pictures/example.png)
+![Alt-Text](./pictures/example2.png)
