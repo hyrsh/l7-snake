@@ -1,0 +1,68 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: snake-endpoint
+  name: snake-endpoint-dpl
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snake-endpoint
+  template:
+    metadata:
+      labels:
+        app: snake-endpoint
+    spec:
+      containers:
+      - image: hyrsh/l7-snake:1.0
+        name: l7-snake
+        ports:
+        - containerPort: 9001
+        volumeMounts:
+        - name: cfg
+          mountPath: /config.yml
+          subPath: config.yml
+      volumes:
+      - name: cfg
+        configMap:
+          name: snake-endpoint-cm
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: snake-endpoint-cm
+  namespace: default
+data:
+  config.yml: |
+    data:
+        communication:
+            id: snake-endpoint
+            listenport: "9001"
+            targets:
+              - 127.0.0.1:9001
+        routing:
+            routes:
+              - default
+            terminator: yes
+        settings:
+            interval: 1s
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: snake-endpoint
+  name: snake-endpoint-svc
+  namespace: default
+spec:
+  ports:
+  - name: general
+    protocol: TCP
+    port: 9001
+  selector:
+    app: snake-endpoint
+  sessionAffinity: None
+  type: ClusterIP
